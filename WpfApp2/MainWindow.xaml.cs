@@ -29,9 +29,13 @@ namespace WpfApp2
         {
             while (true)
             {
+                // just to display that the client is updating content
                 label1.Dispatcher.Invoke(() => {
                     texty();
                 });
+                
+                // update richtextbox and stuff
+
                 Thread.Sleep(2000);
             }
         }
