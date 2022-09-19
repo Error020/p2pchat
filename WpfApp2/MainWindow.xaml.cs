@@ -1,19 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 
 namespace WpfApp2
 {
@@ -36,32 +23,62 @@ namespace WpfApp2
         {
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        { 
-
-        }
-
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Thread test = new Thread(new ThreadStart(TestThread));
-            test.Start();
         }
         public delegate void UpdateTextCallback(string message);
 
+        public void DoSomething()
+        {
+            while (true)
+            {
+                label1.Dispatcher.Invoke(() => {
+                    texty();
+                });
+                Thread.Sleep(2000);
+            }
+        }
+
+        public void texty()
+        {
+            if (label1.Content == "updating")
+            {
+                label1.Content = "...";
+            }
+            else
+            {
+                label1.Content = "updating";
+            }
+        }
+
         private void TestThread()
         {
-            for (int i = 0; i <= 1000000000; i++)
+            int i = 1;
+            while(i == 1)
             {
-                Thread.Sleep(1000);
-                richTextBox1.Dispatcher.Invoke(
+                label1.Dispatcher.Invoke(
                     new UpdateTextCallback(this.UpdateText),
-                    new object[] { i.ToString() }
+                    new object[] { " ".ToString() }
                 );
+                Thread.Sleep(2000);
+                label1.Dispatcher.Invoke(
+                    new UpdateTextCallback(this.UpdateText),
+                    new object[] { "updating".ToString() }
+                );
+
+                // do stuff here
             }
         }
         private void UpdateText(string message)
         {
-            richTextBox1.AppendText(message + "\n");
+            if (label1.Visibility == Visibility.Hidden)
+            {
+                label1.Visibility = Visibility.Visible;
+            } else
+            {
+                label1.Visibility = Visibility.Hidden;
+     
+            }
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -77,8 +94,9 @@ namespace WpfApp2
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            Thread test = new Thread(new ThreadStart(TestThread));
-            test.Start();
+            // Thread test = new Thread(new ThreadStart(TestThread));
+            // test.Start();
+            new Thread(DoSomething).Start();
         }
     }
 }

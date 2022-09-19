@@ -14,8 +14,8 @@
             <ColumnDefinition Width="104*"/>
             <ColumnDefinition Width="488*"/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="4,30,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <RichTextBox x:Name="richTextBox1" Margin="65,10,279,128" TextChanged="richTextBox1_TextChanged_1" Grid.Column="2" Grid.ColumnSpan="3">
+        <Label x:Name="label1" Content="" HorizontalAlignment="Left" Margin="11,14,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Column="1" RenderTransformOrigin="0.932,0.511" Width="74"/>
+        <RichTextBox x:Name="richTextBox1" Margin="71,23,123,115" TextChanged="richTextBox1_TextChanged_1" Grid.Column="3" Grid.ColumnSpan="2">
             <FlowDocument>
                 <Paragraph>
                     <Run Text="RichTextBox"/>
