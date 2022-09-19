@@ -31,7 +31,7 @@ namespace WpfApp2
             {
                 // just to display that the client is updating content
                 label1.Dispatcher.Invoke(() => {
-                    if (label1.Content == "updating")
+                    if (label1.Content.ToString() == "updating")
                     {
                         label1.Content = "...";
                     }
@@ -61,6 +61,10 @@ namespace WpfApp2
             // Thread test = new Thread(new ThreadStart(TestThread));
             // test.Start();
             new Thread(DoSomething).Start();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
         }
     }
 }
