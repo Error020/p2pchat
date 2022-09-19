@@ -50,7 +50,8 @@ namespace WpfApp2
 
         private void TestThread()
         {
-            for (int i = 0; i <= 1000000000; i++)
+            int i = 1;
+            while(i == 1)
             {
                 Thread.Sleep(1000);
                 richTextBox1.Dispatcher.Invoke(
