@@ -31,7 +31,14 @@ namespace WpfApp2
             {
                 // just to display that the client is updating content
                 label1.Dispatcher.Invoke(() => {
-                    texty();
+                    if (label1.Content == "updating")
+                    {
+                        label1.Content = "...";
+                    }
+                    else
+                    {
+                        label1.Content = "updating";
+                    }
                 });
                 
                 // update richtextbox and stuff
@@ -39,19 +46,6 @@ namespace WpfApp2
                 Thread.Sleep(2000);
             }
         }
-
-        public void texty()
-        {
-            if (label1.Content == "updating")
-            {
-                label1.Content = "...";
-            }
-            else
-            {
-                label1.Content = "updating";
-            }
-        }
-
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
