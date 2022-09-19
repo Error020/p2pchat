@@ -23,9 +23,6 @@ namespace WpfApp2
         {
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
         public delegate void UpdateTextCallback(string message);
 
         public void DoSomething()
@@ -51,40 +48,9 @@ namespace WpfApp2
             }
         }
 
-        private void TestThread()
-        {
-            int i = 1;
-            while(i == 1)
-            {
-                label1.Dispatcher.Invoke(
-                    new UpdateTextCallback(this.UpdateText),
-                    new object[] { " ".ToString() }
-                );
-                Thread.Sleep(2000);
-                label1.Dispatcher.Invoke(
-                    new UpdateTextCallback(this.UpdateText),
-                    new object[] { "updating".ToString() }
-                );
-
-                // do stuff here
-            }
-        }
-        private void UpdateText(string message)
-        {
-            if (label1.Visibility == Visibility.Hidden)
-            {
-                label1.Visibility = Visibility.Visible;
-            } else
-            {
-                label1.Visibility = Visibility.Hidden;
-     
-            }
-        }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            Thread test = new Thread(new ThreadStart(TestThread));
-            test.Start();
         }
 
         private void richTextBox1_TextChanged_1(object sender, TextChangedEventArgs e)
