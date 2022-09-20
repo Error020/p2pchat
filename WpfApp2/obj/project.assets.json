@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ErrorImCodingkeller\\source\\repos\\WpfApp2\\WpfApp2\\WpfApp2.csproj",
-      "projectName": "WpfApp2",
-      "projectPath": "C:\\Users\\ErrorImCodingkeller\\source\\repos\\WpfApp2\\WpfApp2\\WpfApp2.csproj",
+      "projectUniqueName": "C:\\Users\\ErrorImCodingkeller\\source\\repos\\WpfApp2\\WpfApp2\\p2pchat.csproj",
+      "projectName": "p2pchat",
+      "projectPath": "C:\\Users\\ErrorImCodingkeller\\source\\repos\\WpfApp2\\WpfApp2\\p2pchat.csproj",
       "packagesPath": "C:\\Users\\ErrorImCodingkeller\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\ErrorImCodingkeller\\source\\repos\\WpfApp2\\WpfApp2\\obj\\",
       "projectStyle": "PackageReference",
