@@ -92,7 +92,6 @@ namespace WpfApp2
 
         private string getLocalIp()
         {
-            //Grabs local ip of clients server
             IPHostEntry host;
             host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (IPAddress ip in host.AddressList)
