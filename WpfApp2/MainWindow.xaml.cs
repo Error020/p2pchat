@@ -67,7 +67,7 @@ namespace WpfApp2
                     }
                 });
                 
-                // update richtextbox and stuff
+                // do stuff here
 
                 Thread.Sleep(2000);
             }
@@ -111,27 +111,22 @@ namespace WpfApp2
             {
                 if (isConnected == false && IPAddress.TryParse(partnerip.Text, out IPAddress address) && username.Text != "" && int.TryParse(yourport.Text, out int clientPortCheck) && int.TryParse(partnerport.Text, out int friendsPortCheck))
                 {
-                    //Grab information
                     string localIp = getLocalIp();
                     string remoteIp = partnerip.Text;
                     int userPort = Convert.ToInt32(yourport.Text);
                     int friendPort = Convert.ToInt32(partnerport.Text);
 
-                    //Setup socket
                     socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
                     socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
                     epLocal = new IPEndPoint(IPAddress.Parse(localIp), userPort);
                     socket.Bind(epLocal);
 
-                    //Connects to remote ip
                     epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), friendPort);
                     socket.Connect(epRemote);
 
-                    //listen to specific port
                     buffer = new byte[1500];
                     socket.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
 
-                    //Updates connection flags
                     if (isConnected == true)
                     {
                         isConnected = false;
@@ -144,17 +139,14 @@ namespace WpfApp2
                 }
                 else if (isConnected == true)
                 {
-                    //Convert string message to byte
                     ASCIIEncoding aEncoding = new ASCIIEncoding();
                     string disconnectMessage = "{1!ziFEl1.M@)d^d4n7qyRhGYwyZjCVl^#QKD(e)]x/96JB??ce#&xH_XO?5}&L " + username;
                     byte[] sendingMessage = new byte[1500];
                     sendingMessage = aEncoding.GetBytes(disconnectMessage);
 
-                    //Sending the encoded message
                     socket.Send(sendingMessage);
                     chatbox.Items.Add("You have disconnected");
 
-                    //Disconnects & diposes of socket
                     socket.Dispose();
                     connect.Content = "Connect";
                     isConnected = false;
@@ -170,13 +162,11 @@ namespace WpfApp2
         {
             if (clientmessage.Text != "" && socket.IsBound == true)
             {
-                //Sends encoded message indicating friend has disconnected
                 ASCIIEncoding aEncoding = new ASCIIEncoding();
                 byte[] sendingMessage = new byte[1500];
                 sendingMessage = aEncoding.GetBytes(username.Text + ": " + clientmessage.Text);
                 socket.Send(sendingMessage);
 
-                //Adding to the listbox
                 chatbox.Items.Add("Me: " + clientmessage.Text);
                 clientmessage.Text = "";
             }
@@ -192,10 +182,8 @@ namespace WpfApp2
 
         private void MessageCallBack(IAsyncResult aResult)
         {
-            //Async recursive function checking if any messages have been sent to the client
             try
             {
-                //Recieves transmission and converts byte[] to string
                 byte[] recievedData = new byte[1500];
                 recievedData = (byte[])aResult.AsyncState;
                 ASCIIEncoding aEncoding = new ASCIIEncoding();
@@ -203,10 +191,8 @@ namespace WpfApp2
                 int i = recievedMessage.IndexOf('\0');
                 if (i >= 0) recievedMessage = recievedMessage.Substring(0, i);
 
-                //Checks if clientDisconnect string
                 if (!recievedMessage.Contains("{1!ziFEl1.M@)d^d4n7qyRhGYwyZjCVl^#QKD(e)]x/96JB??ce#&xH_XO?5}&L"))
                 {
-                    //If recieved message is present multi-thread will delegate a update to chatbox
                     chatbox.Dispatcher.Invoke(
                         DispatcherPriority.Normal,
                         new Action(
@@ -217,7 +203,6 @@ namespace WpfApp2
                             )
                         );
 
-                    //clear buffer & rescan
                     buffer = new byte[1500];
                     socket.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
                 }
@@ -225,7 +210,6 @@ namespace WpfApp2
                 {
                     string nameOfFriend = recievedMessage.Replace("{1!ziFEl1.M@)d^d4n7qyRhGYwyZjCVl^#QKD(e)]x/96JB??ce#&xH_XO?5}&L ", "");
 
-                    //Sends a disconnect message
                     chatbox.Dispatcher.Invoke(
                         DispatcherPriority.Normal,
                         new Action(
@@ -240,10 +224,31 @@ namespace WpfApp2
             }
             catch (Exception ex)
             {
-                //If recieved message is present multi-thread will delegate a update to chatbox
                 MessageBox.Show("Error: " + ex);
             }
 
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var ip = getLocalIp();
+            Clipboard.SetText(ip);
+        }
+
+        private void chatbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string item = chatbox.SelectedItem.ToString();
+            Clipboard.SetText(item);
+        }
+
+        private void partnerip_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void partnerip_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            partnerip.Text = "";
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
