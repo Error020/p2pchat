@@ -43,6 +43,9 @@ namespace WpfApp2
             InitializeComponent();
             userip.Text += getLocalIp();
             chatbox.Items.Clear();
+            addbutton.IsEnabled = false;
+            addbox.Items.Clear();
+            addbox.Items.Add(getLocalIp() + " (you)");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -135,6 +138,10 @@ namespace WpfApp2
                         isConnected = true;
                     }
                     connect.Content = "Disconnect";
+                    addbutton.IsEnabled = true;
+                    username.IsEnabled = false;
+                    addbox.Items.Add(partnerip.Text);
+
                 }
                 else if (isConnected == true)
                 {
@@ -149,6 +156,10 @@ namespace WpfApp2
                     socket.Dispose();
                     connect.Content = "Connect";
                     isConnected = false;
+                    addbutton.IsEnabled = false;
+                    username.IsEnabled = true;
+                    addbox.Items.Clear();
+                    addbox.Items.Add(getLocalIp() + " (you)");
                 }
             }
             catch (Exception ex)
@@ -248,6 +259,11 @@ namespace WpfApp2
         private void partnerip_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
             partnerip.Text = "";
+        }
+
+        private void addbutton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

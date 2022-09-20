@@ -5,14 +5,21 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>spechbubble.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="spechbubble.ico" />
+    <None Remove="spechbubble.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="spechbubble.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="spechbubble.ico" />
+    <Resource Include="spechbubble.png" />
   </ItemGroup>
 
 </Project>

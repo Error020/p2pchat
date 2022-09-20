@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp2"
         mc:Ignorable="d"
-        Title="P2PChat" Height="450" Width="800" Loaded="Window_Loaded_1" Closing="Window_Closing" ResizeMode="CanMinimize" Icon="/spechbubble.ico">
+        Title="P2PChat" Height="450" Width="800" Loaded="Window_Loaded_1" Closing="Window_Closing" ResizeMode="CanMinimize" Icon="/spechbubble.png">
     <Grid Margin="0,10,0,0">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
@@ -32,5 +32,7 @@
         <ListBox x:Name="chatbox" Grid.Column="5" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,10,10,71" SelectionChanged="chatbox_SelectionChanged" Grid.ColumnSpan="2"/>
         <Button x:Name="copybutton" Grid.Column="2" Content="copy ip" Margin="190,7,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="43" Height="21" Click="Button_Click_1"/>
         <TextBlock Grid.Column="6" HorizontalAlignment="Left" Margin="76,-4,0,0" TextWrapping="Wrap" Text="click message to copy" VerticalAlignment="Top" FontSize="10"/>
+        <ListBox x:Name="addbox" Grid.Column="2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,212,31,128"/>
+        <Button x:Name="addbutton" Grid.Column="2" Content="Add" HorizontalAlignment="Left" Margin="98,158,0,0" VerticalAlignment="Top" Height="28" Width="54" Click="addbutton_Click"/>
     </Grid>
 </Window>
