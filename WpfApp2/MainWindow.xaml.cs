@@ -263,7 +263,23 @@ namespace WpfApp2
 
         private void addbutton_Click(object sender, RoutedEventArgs e)
         {
+            string localIp = getLocalIp();
+            string remoteIp = partnerip.Text;
+            int userPort = Convert.ToInt32(yourport.Text);
+            int friendPort = Convert.ToInt32(partnerport.Text);
 
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+            epLocal = new IPEndPoint(IPAddress.Parse(localIp), userPort);
+            socket.Bind(epLocal);
+
+            epRemote = new IPEndPoint(IPAddress.Parse(remoteIp), friendPort);
+            socket.Connect(epRemote);
+
+            buffer = new byte[1500];
+            socket.BeginReceiveFrom(buffer, 0, buffer.Length, SocketFlags.None, ref epRemote, new AsyncCallback(MessageCallBack), buffer);
+
+            addbox.Items.Add(partnerip.Text);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
